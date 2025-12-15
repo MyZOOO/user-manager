@@ -20,6 +20,9 @@ public class User implements Serializable {
     private String salt; // 密码盐值，用于加密
     private String email; // 邮箱
     private Integer age; // 年龄
+    private String phone; // 电话号码
+    private String nickname; // 昵称
+    private String status; // 禁用状态
 
     // 逻辑删除标记：0=未删除，1=已删除
     @TableLogic // MyBatis-Plus 逻辑删除注解
