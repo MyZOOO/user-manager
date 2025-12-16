@@ -1,5 +1,6 @@
 package top.myzo.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import top.myzo.backend.entity.User;
 import top.myzo.backend.mapper.UserMapper;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.UUID;
 
 @Service // Spring 服务组件注解
@@ -79,5 +81,75 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public String generateSalt() {
         // 使用 UUID 生成 32 位随机盐值（去掉连字符）
         return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    @Override
+    public boolean changePassword(Long userId, String oldPassword, String newPassword) {
+        // 查询用户
+        User user = this.getById(userId);
+        if (user == null) {
+            return false;
+        }
+
+        // 验证旧密码是否正确
+        if (!validatePassword(oldPassword, user.getPassword(), user.getSalt())) {
+            return false;
+        }
+
+        // 生成新的盐值（增强安全性）
+        String newSalt = generateSalt();
+        String encodedNewPassword = encodePassword(newPassword, newSalt);
+
+        // 更新密码和盐值
+        user.setPassword(encodedNewPassword);
+        user.setSalt(newSalt);
+
+        return this.updateById(user);
+    }
+
+    @Override
+    public User updateUserInfo(User user) {
+        // 只更新允许用户修改的字段：email, age
+        // 不允许直接修改 username, password, role, deleted
+        User existingUser = this.getById(user.getId());
+        if (existingUser == null) {
+            return null;
+        }
+
+        // 只更新允许的字段
+        if (user.getEmail() != null) {
+            existingUser.setEmail(user.getEmail());
+        }
+        if (user.getAge() != null) {
+            existingUser.setAge(user.getAge());
+        }
+
+        this.updateById(existingUser);
+        return existingUser;
+    }
+
+    @Override
+    public boolean updateUserRole(Long userId, String role) {
+        // 管理员修改用户角色
+        User user = this.getById(userId);
+        if (user == null) {
+            return false;
+        }
+
+        // 验证角色是否合法
+        if (!"admin".equals(role) && !"user".equals(role)) {
+            return false;
+        }
+
+        user.setRole(role);
+        return this.updateById(user);
+    }
+
+    @Override
+    public List<User> searchUsersByUsername(String username) {
+        // 按用户名模糊搜索
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("username", username);
+        return this.list(queryWrapper);
     }
 }

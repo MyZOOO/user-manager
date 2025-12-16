@@ -20,9 +20,6 @@ public class User implements Serializable {
     private String salt; // 密码盐值，用于加密
     private String email; // 邮箱
     private Integer age; // 年龄
-    private String phone; // 电话号码
-    private String nickname; // 昵称
-    private String status; // 禁用状态
 
     // 逻辑删除标记：0=未删除，1=已删除
     @TableLogic // MyBatis-Plus 逻辑删除注解
@@ -42,4 +39,22 @@ public class User implements Serializable {
      * 用于权限控制和访问限制
      */
     private String role; // 角色字段，决定用户权限级别
+
+    // 显式 getter/setter，避免 Lombok 失效导致的编译问题
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+    public String getSalt() { return salt; }
+    public void setSalt(String salt) { this.salt = salt; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public Integer getAge() { return age; }
+    public void setAge(Integer age) { this.age = age; }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+    public Integer getDeleted() { return deleted; }
+    public void setDeleted(Integer deleted) { this.deleted = deleted; }
 }

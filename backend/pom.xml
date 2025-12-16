@@ -13,9 +13,9 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>shiro-jwt-demo</artifactId>
+    <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>shiro-jwt-demo</name>
+    <name>backend</name>
     <description>Shiro JWT Demo</description>
 
     <properties>
@@ -103,11 +103,11 @@
             <version>1.2.83</version>
         </dependency>
 
-        <!-- Lombok -->
+        <!-- Lombok：确保参与编译期生成代码 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.30</version>
         </dependency>
         <!-- JAXB (for DatatypeConverter on Java 9+) -->
         <dependency>
