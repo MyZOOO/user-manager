@@ -63,7 +63,7 @@
             </span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>
+                <el-dropdown-item command="profile">
                   <el-icon><User /></el-icon>
                   个人信息
                 </el-dropdown-item>
@@ -130,6 +130,9 @@ const handleCommand = async (command) => {
         console.error('退出失败：', error)
       }
     }
+  }
+  if (command === 'profile') {
+    router.push('/profile')
   }
 }
 </script>

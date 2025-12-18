@@ -41,6 +41,12 @@ const routes = [
         name: 'Menus',
         component: () => import('@/views/MenuManagement.vue'),
         meta: { title: '菜单管理', icon: 'Menu', requiresAuth: true }
+      },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: () => import('@/views/Profile.vue'),
+        meta: { title: '个人信息', icon: 'User', requiresAuth: true }
       }
     ]
   }

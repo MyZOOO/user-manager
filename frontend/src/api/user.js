@@ -51,3 +51,25 @@ export function deleteUser(id) {
     method: 'delete'
   })
 }
+
+/**
+ * 更新当前用户资料（邮箱、年龄等）
+ */
+export function updateUserProfile(id, data) {
+  return request({
+    url: `/user/${id}`,
+    method: 'put',
+    data
+  })
+}
+
+/**
+ * 修改密码
+ */
+export function changePassword(id, data) {
+  return request({
+    url: `/user/${id}/password`,
+    method: 'post',
+    data
+  })
+}
