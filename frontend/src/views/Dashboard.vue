@@ -129,23 +129,39 @@ onMounted(async () => {
 const loadStats = async () => {
   try {
     // 获取角色数量
-    const roleRes = await getRoleList()
-    stats.value.roleCount = roleRes.data?.length || 0
+    try {
+      const roleRes = await getRoleList()
+      stats.value.roleCount = roleRes.data?.length || 0
+    } catch (error) {
+      console.warn('获取角色数量失败：', error)
+      stats.value.roleCount = '权限不足'
+    }
     
     // 获取权限数量
-    const permRes = await getPermissionList()
-    stats.value.permissionCount = permRes.data?.length || 0
+    try {
+      const permRes = await getPermissionList()
+      stats.value.permissionCount = permRes.data?.length || 0
+    } catch (error) {
+      console.warn('获取权限数量失败：', error)
+      stats.value.permissionCount = '权限不足'
+    }
     
     // 获取菜单数量
-    const menuRes = await getMenuList()
-    stats.value.menuCount = menuRes.data?.length || 0
+    try {
+      const menuRes = await getMenuList()
+      stats.value.menuCount = menuRes.data?.length || 0
+    } catch (error) {
+      console.warn('获取菜单数量失败：', error)
+      stats.value.menuCount = '权限不足'
+    }
     
     // 尝试获取用户数量（可能需要admin权限）
     try {
       const userRes = await getUserList()
       stats.value.userCount = userRes.data?.length || 0
     } catch (error) {
-      stats.value.userCount = '需要管理员权限'
+      console.warn('获取用户数量失败：', error)
+      stats.value.userCount = '权限不足'
     }
   } catch (error) {
     console.error('加载统计数据失败：', error)

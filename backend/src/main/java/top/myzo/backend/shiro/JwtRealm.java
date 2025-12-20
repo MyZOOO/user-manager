@@ -119,6 +119,6 @@ public class JwtRealm extends AuthorizingRealm {
 
         // 认证成功：返回认证信息，包含 token 作为 principal
         // 第一个参数是 principal（用于授权时取出），第二个参数是 credential（这里也是 token），第三个是 realm 名字
-        return new SimpleAuthenticationInfo(token, token, "jwt_realm");
+        return new SimpleAuthenticationInfo(token, token, getName());
     }
 }

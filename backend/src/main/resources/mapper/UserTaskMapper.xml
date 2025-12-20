@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.myzo.backend.mapper.UserTaskMapper">
+    
+    <sql id="Base_Column_List">
+        id, user_id, username, task_id, task_name, assign_status, completion_status, 
+        accepted_time, completed_time, completion_result, remark, deleted, created_time, updated_time
+    </sql>
+
+    <select id="getTasksByUserId" resultType="top.myzo.backend.entity.UserTask">
+        SELECT 
+            ut.*,
+            t.description,
+            t.priority,
+            t.current_stage,
+            t.deadline,
+            t.initiator_name
+        FROM t_user_task ut
+        LEFT JOIN t_task t ON ut.task_id = t.id
+        WHERE ut.user_id = #{userId} AND ut.deleted = 0
+        ORDER BY ut.created_time DESC
+    </select>
+
+    <select id="getUsersByTaskId" resultType="top.myzo.backend.entity.UserTask">
+        SELECT <include refid="Base_Column_List"/>
+        FROM t_user_task
+        WHERE task_id = #{taskId} AND deleted = 0
+        ORDER BY created_time DESC
+    </select>
+
+    <select id="getUserTask" resultType="top.myzo.backend.entity.UserTask">
+        SELECT <include refid="Base_Column_List"/>
+        FROM t_user_task
+        WHERE user_id = #{userId} AND task_id = #{taskId} AND deleted = 0
+    </select>
+
+</mapper>

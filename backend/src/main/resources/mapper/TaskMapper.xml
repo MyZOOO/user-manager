@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.myzo.backend.mapper.TaskMapper">
+    
+    <sql id="Base_Column_List">
+        id, task_name, description, initiator_id, initiator_name, current_stage, deadline,
+        completion_status, priority, remark, deleted, published_time, created_time, updated_time
+    </sql>
+
+    <select id="getTasksByInitiatorId" resultType="top.myzo.backend.entity.Task">
+        SELECT <include refid="Base_Column_List"/>
+        FROM t_task
+        WHERE initiator_id = #{initiatorId} AND deleted = 0
+        ORDER BY published_time DESC
+    </select>
+
+    <select id="getTasksByCompletionStatus" resultType="top.myzo.backend.entity.Task">
+        SELECT <include refid="Base_Column_List"/>
+        FROM t_task
+        WHERE completion_status = #{completionStatus} AND deleted = 0
+        ORDER BY published_time DESC
+    </select>
+
+    <select id="getAllTasks" resultType="top.myzo.backend.entity.Task">
+        SELECT 
+            t.*,
+            (SELECT COUNT(*) FROM t_user_task ut WHERE ut.task_id = t.id AND ut.deleted = 0) as assignee_count,
+            (SELECT COUNT(*) FROM t_user_task ut WHERE ut.task_id = t.id AND ut.deleted = 0 AND ut.completion_status = 'completed') as completed_count
+        FROM t_task t
+        WHERE t.deleted = 0
+        ORDER BY t.published_time DESC
+    </select>
+
+</mapper>

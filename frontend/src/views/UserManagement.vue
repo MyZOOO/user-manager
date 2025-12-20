@@ -76,7 +76,8 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getUserList, createUser, updateUser, deleteUser } from '@/api/user'
+import { getUserList, updateUser, deleteUser } from '@/api/user'
+import { register } from '@/api/auth'
 
 const loading = ref(false)
 const tableData = ref([])
@@ -180,7 +181,8 @@ const handleSubmit = async () => {
       await updateUser(form.id, form)
       ElMessage.success('更新成功')
     } else {
-      await createUser(form)
+      // 使用注册接口创建用户
+      await register(form)
       ElMessage.success('添加成功')
     }
     

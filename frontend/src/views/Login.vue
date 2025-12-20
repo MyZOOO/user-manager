@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-box">
       <div class="login-header">
-        <h1>🚀 用户管理系统</h1>
+        <h1>用户管理系统</h1>
         <p>User Manager System</p>
       </div>
       
@@ -195,7 +195,7 @@ const handleLogin = async () => {
     localStorage.setItem('user', JSON.stringify(res.data.user))
     
     ElMessage.success('登录成功')
-    router.push('/')
+    await router.push('/')
   } catch (error) {
     console.error('登录失败：', error)
   } finally {
