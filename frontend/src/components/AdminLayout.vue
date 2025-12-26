@@ -35,11 +35,6 @@
           <el-icon><Lock /></el-icon>
           <template #title>权限管理</template>
         </el-menu-item>
-        
-        <el-menu-item index="/admin/menus">
-          <el-icon><Menu /></el-icon>
-          <template #title>菜单管理</template>
-        </el-menu-item>
 
         <el-divider style="margin: 10px 0; background-color: #4a5568;" />
 

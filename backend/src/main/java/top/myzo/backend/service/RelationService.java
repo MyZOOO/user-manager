@@ -1,7 +1,5 @@
 package top.myzo.backend.service;
 
-import top.myzo.backend.entity.Menu;
-
 import java.util.List;
 
 public interface RelationService {
@@ -15,14 +13,7 @@ public interface RelationService {
     boolean unbindRolePermissions(Long roleId, List<Long> permissionIds);
     boolean replaceRolePermissions(Long roleId, List<Long> permissionIds);
 
-    // 角色-菜单绑定
-    boolean bindRoleMenus(Long roleId, List<Long> menuIds);
-    boolean unbindRoleMenus(Long roleId, List<Long> menuIds);
-    boolean replaceRoleMenus(Long roleId, List<Long> menuIds);
-
     // 用户关联查询
     List<String> getRoleCodesByUserId(Long userId);
     List<String> getPermissionCodesByUserId(Long userId);
-    List<Menu> getMenusByUserId(Long userId);
-    List<Menu> getMenuTreeByUserId(Long userId);
 }

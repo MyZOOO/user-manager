@@ -39,12 +39,6 @@ const routes = [
         meta: { title: '权限管理', requiresAuth: true, requiresRole: 'admin' }
       },
       {
-        path: 'menus',
-        name: 'AdminMenus',
-        component: () => import('@/views/MenuManagement.vue'),
-        meta: { title: '菜单管理', requiresAuth: true, requiresRole: 'admin' }
-      },
-      {
         path: 'tasks',
         name: 'AdminTasks',
         component: () => import('@/views/TaskManagement.vue'),

@@ -14,10 +14,12 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/task")
 public class TaskController {
@@ -41,60 +43,60 @@ public class TaskController {
     @RequiresRoles("admin")
     @PostMapping("/publish")
     public Result publishTask(@RequestBody Task task) {
-        System.out.println("\n========================================");
-        System.out.println("【第1步】方法 publishTask 开始执行");
-        System.out.println("【第1步】接收到的 task 数据：" + task);
+        log.info("\n========================================");
+        log.info("【第1步】方法 publishTask 开始执行");
+        log.info("【第1步】接收到的 task 数据：{}", task);
         
         // 从 Shiro 的 Subject 中获取当前用户信息
-        System.out.println("【第2步】从 Shiro 获取 principal");
+        log.info("【第2步】从 Shiro 获取 principal");
         Object principal = SecurityUtils.getSubject().getPrincipal();
         if (principal == null) {
-            System.out.println("【第2步】ERROR：principal 为 null，未登录");
+            log.error("【第2步】ERROR：principal 为 null，未登录");
             return Result.unauthorized("未登录");
         }
-        System.out.println("【第2步】成功获取 principal");
+        log.info("【第2步】成功获取 principal");
 
-        System.out.println("【第3步】验证 Token");
+        log.info("【第3步】验证 Token");
         String token = principal.toString();
         Claims claims = jwtUtil.getClaimByToken(token);
         if (claims == null) {
-            System.out.println("【第3步】ERROR：Token 无效");
+            log.error("【第3步】ERROR：Token 无效");
             return Result.error("Token 无效");
         }
-        System.out.println("【第3步】Token 有效");
+        log.info("【第3步】Token 有效");
 
-        System.out.println("【第4步】获取当前用户信息");
+        log.info("【第4步】获取当前用户信息");
         String username = claims.getSubject();
-        System.out.println("【第4步】用户名：" + username);
+        log.info("【第4步】用户名：{}", username);
         User currentUser = userService.getUserByUsername(username);
         if (currentUser == null) {
-            System.out.println("【第4步】ERROR：获取用户信息失败");
+            log.error("【第4步】ERROR：获取用户信息失败");
             return Result.error("获取用户信息失败");
         }
-        System.out.println("【第4步】成功获取用户：" + currentUser.getUsername() + "（ID=" + currentUser.getId() + "）");
+        log.info("【第4步】成功获取用户：{}（ID={}）", currentUser.getUsername(), currentUser.getId());
 
         // 设置发起人信息
-        System.out.println("【第5步】设置发起人信息");
+        log.info("【第5步】设置发起人信息");
         task.setInitiatorId(currentUser.getId());
         task.setInitiatorName(currentUser.getUsername());
         task.setPublishedTime(LocalDateTime.now());
-        System.out.println("【第5步】发起人信息设置完成");
+        log.info("【第5步】发起人信息设置完成");
 
-        System.out.println("【第6步】验证任务数据");
+        log.info("【第6步】验证任务数据");
         if (task.getTaskName() == null || task.getTaskName().isEmpty()) {
-            System.out.println("【第6步】ERROR：任务名称为空");
+            log.error("【第6步】ERROR：任务名称为空");
             return Result.error("任务名称不能为空");
         }
-        System.out.println("【第6步】任务名称：" + task.getTaskName());
+        log.info("【第6步】任务名称：{}", task.getTaskName());
 
         if (task.getDeadline() == null) {
-            System.out.println("【第6步】ERROR：截止时间为空");
+            log.error("【第6步】ERROR：截止时间为空");
             return Result.error("限定完成时间不能为空");
         }
-        System.out.println("【第6步】截止时间：" + task.getDeadline());
+        log.info("【第6步】截止时间：{}", task.getDeadline());
 
         // 设置默认值
-        System.out.println("【第7步】设置任务默认值");
+        log.info("【第7步】设置任务默认值");
         if (task.getCompletionStatus() == null) {
             task.setCompletionStatus("pending");
         }
@@ -104,20 +106,20 @@ public class TaskController {
         if (task.getPriority() == null) {
             task.setPriority("medium");
         }
-        System.out.println("【第7步】默认值设置完成");
+        log.info("【第7步】默认值设置完成");
 
-        System.out.println("【第8步】调用 taskService.publishTask(task) 保存任务");
+        log.info("【第8步】调用 taskService.publishTask(task) 保存任务");
         boolean result = taskService.publishTask(task);
-        System.out.println("【第8步】publishTask 返回结果：" + result);
+        log.info("【第8步】publishTask 返回结果：{}", result);
         
         if (result) {
-            System.out.println("【第9步】任务保存成功");
-            System.out.println("【第9步】保存后 task 对象数据：id=" + task.getId() + ", name=" + task.getTaskName());
-            System.out.println("========================================\n");
+            log.info("【第9步】任务保存成功");
+            log.info("【第9步】保存后 task 对象数据：id={}, name={}", task.getId(), task.getTaskName());
+            log.info("========================================\n");
             return Result.success("任务发布成功", task);
         } else {
-            System.out.println("【第8步】ERROR：publishTask 返回 false，任务保存失败");
-            System.out.println("========================================\n");
+            log.error("【第8步】ERROR：publishTask 返回 false，任务保存失败");
+            log.info("========================================\n");
             return Result.error("任务发布失败");
         }
     }

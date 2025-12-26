@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.myzo.backend.entity.*;
 import top.myzo.backend.mapper.*;
-import top.myzo.backend.service.MenuService;
 import top.myzo.backend.service.RelationService;
 
 import javax.annotation.Resource;
@@ -17,11 +16,8 @@ public class RelationServiceImpl implements RelationService {
 
     @Resource private UserRoleMapper userRoleMapper;
     @Resource private RolePermissionMapper rolePermissionMapper;
-    @Resource private RoleMenuMapper roleMenuMapper;
     @Resource private RoleMapper roleMapper;
     @Resource private PermissionMapper permissionMapper;
-    @Resource private MenuMapper menuMapper;
-    @Resource private MenuService menuService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -96,42 +92,6 @@ public class RelationServiceImpl implements RelationService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean bindRoleMenus(Long roleId, List<Long> menuIds) {
-        if (roleId == null || menuIds == null) return false;
-        for (Long mid : menuIds) {
-            RoleMenu rm = new RoleMenu();
-            rm.setRoleId(roleId);
-            rm.setMenuId(mid);
-            roleMenuMapper.insert(rm);
-        }
-        return true;
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean unbindRoleMenus(Long roleId, List<Long> menuIds) {
-        if (roleId == null || menuIds == null) return false;
-        for (Long mid : menuIds) {
-            roleMenuMapper.delete(new LambdaQueryWrapper<RoleMenu>()
-                    .eq(RoleMenu::getRoleId, roleId)
-                    .eq(RoleMenu::getMenuId, mid));
-        }
-        return true;
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean replaceRoleMenus(Long roleId, List<Long> menuIds) {
-        if (roleId == null) return false;
-        roleMenuMapper.delete(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, roleId));
-        if (menuIds != null && !menuIds.isEmpty()) {
-            bindRoleMenus(roleId, menuIds);
-        }
-        return true;
-    }
-
-    @Override
     public List<String> getRoleCodesByUserId(Long userId) {
         List<UserRole> urs = userRoleMapper.selectList(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, userId));
         if (urs.isEmpty()) return Collections.emptyList();
@@ -154,25 +114,5 @@ public class RelationServiceImpl implements RelationService {
         if (pids.isEmpty()) return Collections.emptyList();
         List<Permission> ps = permissionMapper.selectBatchIds(pids);
         return ps.stream().map(Permission::getCode).filter(Objects::nonNull).distinct().collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Menu> getMenusByUserId(Long userId) {
-        List<UserRole> urs = userRoleMapper.selectList(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, userId));
-        if (urs.isEmpty()) return Collections.emptyList();
-        List<Long> roleIds = urs.stream().map(UserRole::getRoleId).collect(Collectors.toList());
-        if (roleIds.isEmpty()) return Collections.emptyList();
-        List<RoleMenu> rms = roleMenuMapper.selectList(new LambdaQueryWrapper<RoleMenu>().in(RoleMenu::getRoleId, roleIds));
-        if (rms.isEmpty()) return Collections.emptyList();
-        List<Long> menuIds = rms.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
-        if (menuIds.isEmpty()) return Collections.emptyList();
-        return menuMapper.selectBatchIds(menuIds);
-    }
-
-    @Override
-    public List<Menu> getMenuTreeByUserId(Long userId) {
-        List<Menu> menus = getMenusByUserId(userId);
-        if (menus.isEmpty()) return Collections.emptyList();
-        return menuService.buildMenuTree(menus);
     }
 }
