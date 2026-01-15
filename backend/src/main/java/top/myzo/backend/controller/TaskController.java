@@ -2,10 +2,8 @@ package top.myzo.backend.controller;
 
 import top.myzo.backend.entity.Task;
 import top.myzo.backend.entity.User;
-import top.myzo.backend.entity.UserTask;
 import top.myzo.backend.service.TaskService;
 import top.myzo.backend.service.UserService;
-import top.myzo.backend.service.UserTaskService;
 import top.myzo.backend.utils.JwtUtil;
 import top.myzo.backend.utils.Result;
 import io.jsonwebtoken.Claims;
@@ -29,9 +27,6 @@ public class TaskController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserTaskService userTaskService;
 
     @Autowired
     private JwtUtil jwtUtil;

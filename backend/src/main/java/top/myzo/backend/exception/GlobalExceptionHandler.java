@@ -1,12 +1,18 @@
 package top.myzo.backend.exception;
 
 import top.myzo.backend.utils.Result;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(UnauthenticatedException.class)
+    public Result handleUnauthenticatedException(UnauthenticatedException e) {
+        return Result.unauthorized("未登录或登录已过期");
+    }
 
     @ExceptionHandler(UnauthorizedException.class)
     public Result handleUnauthorizedException(UnauthorizedException e) {

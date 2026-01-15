@@ -28,6 +28,6 @@ public class Role {
     private LocalDateTime updateTime;
 
     // 显式 getter/setter，避免 Lombok 失效导致的编译问题
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+//    public Long getId() { return id; }
+//    public void setId(Long id) { this.id = id; }
 }

@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { isTokenExpired } from '@/utils/auth'
 
 const routes = [
   {
@@ -51,6 +52,12 @@ const routes = [
         meta: { title: '发布任务', requiresAuth: true, requiresRole: 'admin' }
       },
       {
+        path: 'logs',
+        name: 'AdminLogs',
+        component: () => import('@/views/LogInfoManagement.vue'),
+        meta: { title: '操作日志', requiresAuth: true, requiresRole: 'admin' }
+      },
+      {
         path: 'profile',
         name: 'AdminProfile',
         component: () => import('@/views/Profile.vue'),
@@ -88,11 +95,19 @@ const routes = [
   // 旧的通用路由，将其重定向
   {
     path: '/',
-    redirect: (to) => {
+    redirect: () => {
       const user = localStorage.getItem('user')
-      if (!user) return '/login'
+      const token = localStorage.getItem('token')
+
+      if (!user || !token || isTokenExpired(token)) {
+        localStorage.clear()
+        return '/login'
+      }
+
       const userObj = JSON.parse(user)
-      return userObj.role === 'admin' ? '/admin/dashboard' : '/user/dashboard'
+      return userObj.role === 'admin'
+          ? '/admin/dashboard'
+          : '/user/dashboard'
     }
   }
 ]

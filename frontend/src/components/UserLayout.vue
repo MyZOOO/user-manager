@@ -3,8 +3,8 @@
     <!-- 侧边栏 -->
     <el-aside :width="isCollapse ? '64px' : '200px'" class="layout-aside">
       <div class="logo">
-        <span v-if="!isCollapse">👤 用户中心</span>
-        <span v-else>👤</span>
+        <span v-if="!isCollapse">用户中心</span>
+        <span v-else>?</span>
       </div>
       
       <el-menu

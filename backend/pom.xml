@@ -12,11 +12,11 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.example</groupId>
+    <groupId>top.myzo</groupId>
     <artifactId>backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <name>backend</name>
-    <description>Shiro JWT Demo</description>
+    <description>user-manager</description>
 
     <properties>
         <java.version>8</java.version>
@@ -84,9 +84,9 @@
         </dependency>
         <!-- MySQL -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.5.0</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -108,6 +108,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
         <!-- JAXB (for DatatypeConverter on Java 9+) -->
         <dependency>

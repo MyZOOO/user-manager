@@ -3,8 +3,8 @@
     <!-- 侧边栏 -->
     <el-aside :width="isCollapse ? '64px' : '200px'" class="layout-aside">
       <div class="logo">
-        <span v-if="!isCollapse">🔐 管理员面板</span>
-        <span v-else>👨‍💼</span>
+        <span v-if="!isCollapse">管理员面板</span>
+        <span v-else>!</span>
       </div>
       
       <el-menu
@@ -47,6 +47,13 @@
           <el-icon><Plus /></el-icon>
           <template #title>发布任务</template>
         </el-menu-item>
+
+        <el-divider style="margin: 10px 0; background-color: #4a5568;" />
+
+        <el-menu-item index="/admin/logs">
+          <el-icon><Document /></el-icon>
+          <template #title>操作日志</template>
+        </el-menu-item>
       </el-menu>
     </el-aside>
 
@@ -64,7 +71,7 @@
         <div class="header-right">
           <el-dropdown @command="handleCommand">
             <span class="user-dropdown">
-              <el-avatar :size="32" src="https://cube.elemecdn.com/3/x3/46dbd94d570e6e6171560ae6792d561png.png" />
+              <el-avatar :size="32" src="#" />
               <span class="username">{{ currentUser?.username || '管理员' }}</span>
               <el-icon><CaretBottom /></el-icon>
             </span>
@@ -96,7 +103,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { HomeFilled, User, UserFilled, Lock, Menu, DocumentCopy, Plus, Expand, Fold, CaretBottom, SwitchButton } from '@element-plus/icons-vue'
+import { HomeFilled, User, UserFilled, Lock, Menu, DocumentCopy, Plus, Expand, Fold, CaretBottom, SwitchButton, Document } from '@element-plus/icons-vue'
 import { logout } from '@/api/auth'
 
 const router = useRouter()

@@ -1,11 +1,9 @@
 package top.myzo.backend.filter;
 
 import top.myzo.backend.shiro.JwtToken;
-import top.myzo.backend.utils.JwtUtil;
 import top.myzo.backend.utils.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 
@@ -18,9 +16,6 @@ import java.io.PrintWriter;
 
 public class JwtFilter extends BasicHttpAuthenticationFilter {
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
     /**
      * 执行登录认证
      * 在请求进入时被调用，判断是否需要进行认证
@@ -31,7 +26,11 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         if (isLoginAttempt(request, response)) {
             try {
                 // 尝试执行登录（验证 token）
-                executeLogin(request, response);
+                if (!executeLogin(request, response)) {
+                    // 登录失败（token 无效或过期），返回 401
+                    response401(request, response);
+                    return false;
+                }
             } catch (Exception e) {
                 // token 验证失败，返回 401 未授权
                 response401(request, response);
@@ -51,7 +50,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         // 从 Authorization 请求头中获取 token
         String token = req.getHeader("Authorization");
         // 只有当 token 不为空时才认为用户想要登录
-        return !StringUtils.isEmpty(token);
+        return StringUtils.hasLength(token);
     }
 
     /**
@@ -63,7 +62,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
         // 获取 Authorization 请求头
         String authHeader = httpServletRequest.getHeader("Authorization");
-        if (StringUtils.isEmpty(authHeader)) {
+        if (!StringUtils.hasLength(authHeader)) {
             return false;
         }
 

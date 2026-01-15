@@ -1,13 +1,17 @@
 package top.myzo.backend.controller;
 
+import top.myzo.backend.entity.LogInfo;
 import top.myzo.backend.entity.User;
+import top.myzo.backend.service.LogInfoService;
 import top.myzo.backend.service.UserService;
 import top.myzo.backend.utils.JwtUtil;
 import top.myzo.backend.utils.Result;
+import top.myzo.backend.utils.Status;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,27 +19,32 @@ import java.util.Map;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired // 依赖注入用户服务
+    @Autowired
     private UserService userService;
 
-    @Autowired // 依赖注入 JWT 工具类
+    @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private LogInfoService logInfoService;
 
     /**
      * 用户登录端点
      * 接受用户名和密码，验证后返回 JWT token
      */
     @PostMapping("/login")
-    public Result login(@RequestParam String username, @RequestParam String password) {
+    public Result login(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
 
         // 从数据库查询用户是否存在
         User user = userService.getUserByUsername(username);
         if (user == null) {
+            saveLog(username, request, "登录失败:用户不存在");
             return Result.error("用户不存在");
         }
 
         // 验证密码是否正确（使用 SHA-256 + 盐值验证）
         if (!userService.validatePassword(password, user.getPassword(), user.getSalt())) {
+            saveLog(username, request, "登录失败:密码错误");
             return Result.error("密码错误");
         }
 
@@ -47,6 +56,7 @@ public class AuthController {
         result.put("token", token); // JWT token，用于后续请求的认证
         result.put("user", user); // 用户信息（包含 id、username、email、age、role 等）
 
+        saveLog(username, request, "登录成功");
         // 返回登录成功的结果
         return Result.success("登录成功", result);
     }
@@ -56,22 +66,19 @@ public class AuthController {
      * 接受用户信息（用户名、密码、邮箱、年龄），创建新用户
      */
     @PostMapping("/register")
-    public Result register(@RequestBody User user) {
+    public Result register(@RequestBody User user, HttpServletRequest request) {
 
         // 验证用户名是否已存在
         User existingUser = userService.getUserByUsername(user.getUsername());
         if (existingUser != null) {
+            saveLog(user.getUsername(), request, "注册失败:用户名已存在");
             return Result.error("用户名已存在");
         }
 
         // 调用服务注册用户
-        // UserServiceImpl.registerUser 会自动处理：
-        // 1. 生成随机盐值
-        // 2. 使用 SHA-256 + 盐值加密密码
-        // 3. 设置默认角色为 "user"
-        // 4. 设置 deleted = 0（未删除）
         User registeredUser = userService.registerUser(user);
         
+        saveLog(user.getUsername(), request, "注册成功");
         // 返回注册成功的结果，包含新用户信息
         return Result.success("注册成功", registeredUser);
     }
@@ -81,13 +88,28 @@ public class AuthController {
      * 登出当前用户（清除认证信息）
      */
     @PostMapping("/logout")
-    public Result logout() {
+    public Result logout(HttpServletRequest request) {
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
         // 调用 Shiro 的 logout 方法清除认证信息
-        // 由于我们使用 JWT 无状态认证，实际的 token 验证在服务端进行
-        // 客户端只需要停止使用该 token 即可
         SecurityUtils.getSubject().logout();
         
+        if (username != null) {
+            saveLog(username, request, "登出成功");
+        }
         // 返回登出成功的结果
         return Result.success("登出成功");
+    }
+
+    private void saveLog(String username, HttpServletRequest request, String status) {
+        try {
+            LogInfo logInfo = new LogInfo();
+            logInfo.setUsername(username);
+            logInfo.setIpAddress(Status.getIpAddress(request));
+            logInfo.setOs(Status.parseOS(request.getHeader("User-Agent")));
+            logInfo.setStatus(status);
+            logInfoService.save(logInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

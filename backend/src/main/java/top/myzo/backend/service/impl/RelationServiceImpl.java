@@ -97,7 +97,7 @@ public class RelationServiceImpl implements RelationService {
         if (urs.isEmpty()) return Collections.emptyList();
         List<Long> roleIds = urs.stream().map(UserRole::getRoleId).collect(Collectors.toList());
         if (roleIds.isEmpty()) return Collections.emptyList();
-        List<Role> roles = roleMapper.selectBatchIds(roleIds);
+        List<Role> roles = roleMapper.selectList(new LambdaQueryWrapper<Role>().in(Role::getId, roleIds));
         return roles.stream().map(Role::getCode).filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 
@@ -112,7 +112,7 @@ public class RelationServiceImpl implements RelationService {
         if (rps.isEmpty()) return Collections.emptyList();
         List<Long> pids = rps.stream().map(RolePermission::getPermissionId).collect(Collectors.toList());
         if (pids.isEmpty()) return Collections.emptyList();
-        List<Permission> ps = permissionMapper.selectBatchIds(pids);
+        List<Permission> ps = permissionMapper.selectList(new LambdaQueryWrapper<Permission>().in(Permission::getId, pids));
         return ps.stream().map(Permission::getCode).filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 }

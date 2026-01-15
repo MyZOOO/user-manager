@@ -18,7 +18,7 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*Mapper.xml
-  type-aliases-package: com.example.shirojwt.entity
+  type-aliases-package: top.myzo.backend.entity
   global-config:
     db-config:
       logic-delete-field: deleted  # 逻辑删除字段名

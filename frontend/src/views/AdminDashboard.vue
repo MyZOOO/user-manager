@@ -101,7 +101,7 @@
         <el-card>
           <template #header>
             <div class="card-header">
-              <span>ℹ️ 系统信息</span>
+              <span>系统信息</span>
             </div>
           </template>
           <el-descriptions :column="2" border>

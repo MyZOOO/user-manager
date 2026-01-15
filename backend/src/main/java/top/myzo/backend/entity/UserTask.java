@@ -54,43 +54,43 @@ public class UserTask implements Serializable {
     private String initiatorName;
 
     // Getter/Setter
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public String getPriority() { return priority; }
-    public void setPriority(String priority) { this.priority = priority; }
-    public String getCurrentStage() { return currentStage; }
-    public void setCurrentStage(String currentStage) { this.currentStage = currentStage; }
-    public LocalDateTime getDeadline() { return deadline; }
-    public void setDeadline(LocalDateTime deadline) { this.deadline = deadline; }
-    public String getInitiatorName() { return initiatorName; }
-    public void setInitiatorName(String initiatorName) { this.initiatorName = initiatorName; }
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
-    public Long getTaskId() { return taskId; }
-    public void setTaskId(Long taskId) { this.taskId = taskId; }
-    public String getTaskName() { return taskName; }
-    public void setTaskName(String taskName) { this.taskName = taskName; }
-    public String getAssignStatus() { return assignStatus; }
-    public void setAssignStatus(String assignStatus) { this.assignStatus = assignStatus; }
-    public String getCompletionStatus() { return completionStatus; }
-    public void setCompletionStatus(String completionStatus) { this.completionStatus = completionStatus; }
-    public LocalDateTime getAcceptedTime() { return acceptedTime; }
-    public void setAcceptedTime(LocalDateTime acceptedTime) { this.acceptedTime = acceptedTime; }
-    public LocalDateTime getCompletedTime() { return completedTime; }
-    public void setCompletedTime(LocalDateTime completedTime) { this.completedTime = completedTime; }
-    public String getCompletionResult() { return completionResult; }
-    public void setCompletionResult(String completionResult) { this.completionResult = completionResult; }
-    public String getRemark() { return remark; }
-    public void setRemark(String remark) { this.remark = remark; }
-    public Integer getDeleted() { return deleted; }
-    public void setDeleted(Integer deleted) { this.deleted = deleted; }
-    public LocalDateTime getCreateTime() { return createTime; }
-    public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
-    public LocalDateTime getUpdateTime() { return updateTime; }
-    public void setUpdateTime(LocalDateTime updateTime) { this.updateTime = updateTime; }
+//    public String getDescription() { return description; }
+//    public void setDescription(String description) { this.description = description; }
+//    public String getPriority() { return priority; }
+//    public void setPriority(String priority) { this.priority = priority; }
+//    public String getCurrentStage() { return currentStage; }
+//    public void setCurrentStage(String currentStage) { this.currentStage = currentStage; }
+//    public LocalDateTime getDeadline() { return deadline; }
+//    public void setDeadline(LocalDateTime deadline) { this.deadline = deadline; }
+//    public String getInitiatorName() { return initiatorName; }
+//    public void setInitiatorName(String initiatorName) { this.initiatorName = initiatorName; }
+//
+//    public Long getId() { return id; }
+//    public void setId(Long id) { this.id = id; }
+//    public Long getUserId() { return userId; }
+//    public void setUserId(Long userId) { this.userId = userId; }
+//    public String getUsername() { return username; }
+//    public void setUsername(String username) { this.username = username; }
+//    public Long getTaskId() { return taskId; }
+//    public void setTaskId(Long taskId) { this.taskId = taskId; }
+//    public String getTaskName() { return taskName; }
+//    public void setTaskName(String taskName) { this.taskName = taskName; }
+//    public String getAssignStatus() { return assignStatus; }
+//    public void setAssignStatus(String assignStatus) { this.assignStatus = assignStatus; }
+//    public String getCompletionStatus() { return completionStatus; }
+//    public void setCompletionStatus(String completionStatus) { this.completionStatus = completionStatus; }
+//    public LocalDateTime getAcceptedTime() { return acceptedTime; }
+//    public void setAcceptedTime(LocalDateTime acceptedTime) { this.acceptedTime = acceptedTime; }
+//    public LocalDateTime getCompletedTime() { return completedTime; }
+//    public void setCompletedTime(LocalDateTime completedTime) { this.completedTime = completedTime; }
+//    public String getCompletionResult() { return completionResult; }
+//    public void setCompletionResult(String completionResult) { this.completionResult = completionResult; }
+//    public String getRemark() { return remark; }
+//    public void setRemark(String remark) { this.remark = remark; }
+//    public Integer getDeleted() { return deleted; }
+//    public void setDeleted(Integer deleted) { this.deleted = deleted; }
+//    public LocalDateTime getCreateTime() { return createTime; }
+//    public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
+//    public LocalDateTime getUpdateTime() { return updateTime; }
+//    public void setUpdateTime(LocalDateTime updateTime) { this.updateTime = updateTime; }
 }

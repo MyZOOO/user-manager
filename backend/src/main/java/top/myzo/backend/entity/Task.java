@@ -47,36 +47,36 @@ public class Task implements Serializable {
     private Integer completedCount; // 完成人数
 
     // Getter/Setter
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getTaskName() { return taskName; }
-    public void setTaskName(String taskName) { this.taskName = taskName; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public Long getInitiatorId() { return initiatorId; }
-    public void setInitiatorId(Long initiatorId) { this.initiatorId = initiatorId; }
-    public String getInitiatorName() { return initiatorName; }
-    public void setInitiatorName(String initiatorName) { this.initiatorName = initiatorName; }
-    public String getCurrentStage() { return currentStage; }
-    public void setCurrentStage(String currentStage) { this.currentStage = currentStage; }
-    public LocalDateTime getDeadline() { return deadline; }
-    public void setDeadline(LocalDateTime deadline) { this.deadline = deadline; }
-    public String getCompletionStatus() { return completionStatus; }
-    public void setCompletionStatus(String completionStatus) { this.completionStatus = completionStatus; }
-    public String getPriority() { return priority; }
-    public void setPriority(String priority) { this.priority = priority; }
-    public String getRemark() { return remark; }
-    public void setRemark(String remark) { this.remark = remark; }
-    public Integer getDeleted() { return deleted; }
-    public void setDeleted(Integer deleted) { this.deleted = deleted; }
-    public LocalDateTime getPublishedTime() { return publishedTime; }
-    public void setPublishedTime(LocalDateTime publishedTime) { this.publishedTime = publishedTime; }
-    public LocalDateTime getCreateTime() { return createTime; }
-    public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
-    public LocalDateTime getUpdateTime() { return updateTime; }
-    public void setUpdateTime(LocalDateTime updateTime) { this.updateTime = updateTime; }
-    public Integer getAssigneeCount() { return assigneeCount; }
-    public void setAssigneeCount(Integer assigneeCount) { this.assigneeCount = assigneeCount; }
-    public Integer getCompletedCount() { return completedCount; }
-    public void setCompletedCount(Integer completedCount) { this.completedCount = completedCount; }
+//    public Long getId() { return id; }
+//    public void setId(Long id) { this.id = id; }
+//    public String getTaskName() { return taskName; }
+//    public void setTaskName(String taskName) { this.taskName = taskName; }
+//    public String getDescription() { return description; }
+//    public void setDescription(String description) { this.description = description; }
+//    public Long getInitiatorId() { return initiatorId; }
+//    public void setInitiatorId(Long initiatorId) { this.initiatorId = initiatorId; }
+//    public String getInitiatorName() { return initiatorName; }
+//    public void setInitiatorName(String initiatorName) { this.initiatorName = initiatorName; }
+//    public String getCurrentStage() { return currentStage; }
+//    public void setCurrentStage(String currentStage) { this.currentStage = currentStage; }
+//    public LocalDateTime getDeadline() { return deadline; }
+//    public void setDeadline(LocalDateTime deadline) { this.deadline = deadline; }
+//    public String getCompletionStatus() { return completionStatus; }
+//    public void setCompletionStatus(String completionStatus) { this.completionStatus = completionStatus; }
+//    public String getPriority() { return priority; }
+//    public void setPriority(String priority) { this.priority = priority; }
+//    public String getRemark() { return remark; }
+//    public void setRemark(String remark) { this.remark = remark; }
+//    public Integer getDeleted() { return deleted; }
+//    public void setDeleted(Integer deleted) { this.deleted = deleted; }
+//    public LocalDateTime getPublishedTime() { return publishedTime; }
+//    public void setPublishedTime(LocalDateTime publishedTime) { this.publishedTime = publishedTime; }
+//    public LocalDateTime getCreateTime() { return createTime; }
+//    public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
+//    public LocalDateTime getUpdateTime() { return updateTime; }
+//    public void setUpdateTime(LocalDateTime updateTime) { this.updateTime = updateTime; }
+//    public Integer getAssigneeCount() { return assigneeCount; }
+//    public void setAssigneeCount(Integer assigneeCount) { this.assigneeCount = assigneeCount; }
+//    public Integer getCompletedCount() { return completedCount; }
+//    public void setCompletedCount(Integer completedCount) { this.completedCount = completedCount; }
 }
