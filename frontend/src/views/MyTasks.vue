@@ -464,30 +464,6 @@ export default {
   font-weight: 500;
 }
 
-.status.assigned {
-  background-color: #fef0f0;
-  color: #f56c6c;
-}
-
-.status.accepted {
-  background-color: #fef5e6;
-  color: #e6a23c;
-}
-
-.status.rejected {
-  background-color: #f0f0f0;
-  color: #999;
-}
-
-.status.pending {
-  background-color: #fef0f0;
-  color: #f56c6c;
-}
-
-.status.completed {
-  background-color: #f0f9ff;
-  color: #409EFF;
-}
 
 .action-buttons {
   display: flex;

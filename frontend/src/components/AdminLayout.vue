@@ -103,7 +103,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { HomeFilled, User, UserFilled, Lock, Menu, DocumentCopy, Plus, Expand, Fold, CaretBottom, SwitchButton, Document } from '@element-plus/icons-vue'
+import { HomeFilled, User, UserFilled, Lock, DocumentCopy, Plus, Expand, Fold, CaretBottom, SwitchButton, Document } from '@element-plus/icons-vue'
 import { logout } from '@/api/auth'
 
 const router = useRouter()
@@ -138,7 +138,7 @@ const handleCommand = async (command) => {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       ElMessage.success('退出成功')
-      router.push('/login')
+      await router.push('/login')
     } catch (error) {
       if (error !== 'cancel') {
         console.error('退出失败：', error)
@@ -146,7 +146,7 @@ const handleCommand = async (command) => {
     }
   }
   if (command === 'profile') {
-    router.push('/admin/profile')
+    await router.push('/admin/profile')
   }
 }
 </script>

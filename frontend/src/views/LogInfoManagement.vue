@@ -60,7 +60,7 @@
 import { ref, onMounted, reactive } from 'vue'
 import { getLogList } from '../api/logInfo'
 import { ElMessage } from 'element-plus'
-import { Document, Search, Refresh } from '@element-plus/icons-vue'
+import { Document } from '@element-plus/icons-vue'
 
 const loading = ref(false)
 const tableData = ref([])
@@ -95,18 +95,6 @@ const getList = async () => {
     loading.value = false
   }
 }
-
-const handleSearch = () => {
-  queryParams.page = 1
-  getList()
-}
-
-const handleReset = () => {
-  queryParams.username = ''
-  queryParams.status = ''
-  handleSearch()
-}
-
 const handleSizeChange = (val) => {
   queryParams.size = val
   getList()
@@ -149,12 +137,7 @@ onMounted(() => {
   font-weight: bold;
   color: #303133;
 }
-.search-container {
-  background-color: #f5f7fa;
-  padding: 18px 18px 0;
-  margin-bottom: 20px;
-  border-radius: 4px;
-}
+
 .pagination-container {
   margin-top: 20px;
   display: flex;
@@ -163,10 +146,5 @@ onMounted(() => {
 .time-text {
   color: #606266;
   font-family: monospace;
-}
-:deep(.table-header) {
-  background-color: #f5f7fa !important;
-  color: #606266;
-  font-weight: bold;
 }
 </style>

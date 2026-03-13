@@ -114,7 +114,7 @@ const handleCommand = async (command) => {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       ElMessage.success('退出成功')
-      router.push('/login')
+      await router.push('/login')
     } catch (error) {
       if (error !== 'cancel') {
         console.error('退出失败：', error)
@@ -122,7 +122,7 @@ const handleCommand = async (command) => {
     }
   }
   if (command === 'profile') {
-    router.push('/user/profile')
+    await router.push('/user/profile')
   }
 }
 </script>

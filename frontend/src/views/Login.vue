@@ -274,12 +274,4 @@ const handleRegister = async () => {
   margin-top: 20px;
 }
 
-:deep(.el-tabs__item) {
-  font-size: 16px;
-  font-weight: 500;
-}
-
-:deep(.el-form-item) {
-  margin-bottom: 24px;
-}
 </style>

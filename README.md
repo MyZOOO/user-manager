@@ -5,7 +5,7 @@ user-manager System
 
 ---
 
-### **后端 (Backend)**
+## **后端**
 
 * **项目名称** **:** `backend`
 * **项目描述** **:** `user-manager` **(用户管理)**
@@ -34,7 +34,7 @@ user-manager System
 
 ---
 
-### **前端 (Frontend)**
+## **前端**
 
 * **项目名称** **:** `frontend`
 * **开发语言** **:** **JavaScript / TypeScript**
@@ -60,7 +60,7 @@ user-manager System
 
 ---
 
-### **数据库 (Database)**
+## **数据库**
 
 #### **使用MySQL作为数据库**
 * **MySQL数据库版本** **8.4.8**

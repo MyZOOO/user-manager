@@ -163,10 +163,6 @@ const handleCommand = async (command) => {
   height: calc(100vh - 60px);
 }
 
-.el-menu-vertical:not(.el-menu--collapse) {
-  width: 200px;
-}
-
 .layout-header {
   background: #fff;
   border-bottom: 1px solid #e6e6e6;
