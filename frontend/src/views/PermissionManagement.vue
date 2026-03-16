@@ -12,9 +12,6 @@
         <el-table-column prop="id" label="ID" width="80" />
         <el-table-column prop="name" label="权限名称" width="200" />
         <el-table-column prop="code" label="权限代码" width="200" />
-        <el-table-column prop="resource" label="资源类型" width="120" />
-        <el-table-column prop="url" label="URL路径" />
-        <el-table-column prop="method" label="请求方法" width="100" />
         <el-table-column prop="createTime" label="创建时间" width="180">
           <template #default="{ row }">
             {{ formatDate(row.createTime) }}
@@ -36,25 +33,6 @@
         </el-form-item>
         <el-form-item label="权限代码" prop="code">
           <el-input v-model="form.code" placeholder="如: user:view" />
-        </el-form-item>
-        <el-form-item label="资源类型" prop="resource">
-          <el-select v-model="form.resource" placeholder="请选择资源类型">
-            <el-option label="API接口" value="api" />
-            <el-option label="菜单" value="menu" />
-            <el-option label="按钮" value="button" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="URL路径" prop="url">
-          <el-input v-model="form.url" placeholder="如: /api/users/**" />
-        </el-form-item>
-        <el-form-item label="请求方法" prop="method">
-          <el-select v-model="form.method" placeholder="请选择请求方法">
-            <el-option label="GET" value="GET" />
-            <el-option label="POST" value="POST" />
-            <el-option label="PUT" value="PUT" />
-            <el-option label="DELETE" value="DELETE" />
-            <el-option label="ALL" value="ALL" />
-          </el-select>
         </el-form-item>
       </el-form>
       
@@ -90,10 +68,7 @@ const form = reactive({
 
 const rules = {
   name: [{ required: true, message: '请输入权限名称', trigger: 'blur' }],
-  code: [{ required: true, message: '请输入权限代码', trigger: 'blur' }],
-  resource: [{ required: true, message: '请选择资源类型', trigger: 'change' }],
-  url: [{ required: true, message: '请输入URL路径', trigger: 'blur' }],
-  method: [{ required: true, message: '请选择请求方法', trigger: 'change' }]
+  code: [{ required: true, message: '请输入权限代码', trigger: 'blur' }]
 }
 
 onMounted(() => loadData())
@@ -166,10 +141,7 @@ const handleDialogClose = () => {
   Object.assign(form, {
     id: null,
     name: '',
-    code: '',
-    resource: 'api',
-    url: '',
-    method: 'GET'
+    code: ''
   })
 }
 

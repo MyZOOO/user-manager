@@ -13,9 +13,6 @@ public class Permission {
 
     private String name;          // 权限名称（修正类型为 String）
     private String code;          // 权限编码
-    private String type;          // 类型：menu/button/api 等
-    private String path;          // 资源路径
-    private String method;        // HTTP 方法（GET/POST/...）
 
     @TableLogic
     @TableField(value = "deleted", fill = FieldFill.INSERT)
