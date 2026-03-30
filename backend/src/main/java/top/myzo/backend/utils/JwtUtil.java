@@ -3,8 +3,12 @@ package top.myzo.backend.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import top.myzo.backend.entity.User;
+import top.myzo.backend.service.UserService;
 
 import java.util.Date;
 
@@ -19,6 +23,9 @@ public class JwtUtil {
 
     @Value("${jwt.header}")
     private String header;
+
+    @javax.annotation.Resource
+    private UserService userService;
 
     /**
      * 生成JWT token
@@ -58,5 +65,30 @@ public class JwtUtil {
      */
     public boolean isTokenExpired(Date expiration) {
         return expiration.before(new Date());
+    }
+
+    /**
+     * 从当前token中获取用户ID
+     */
+    public Long getCurrentUserIdFromToken() {
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            if (subject != null && subject.getPrincipal() != null) {
+                String token = subject.getPrincipal().toString();
+                Claims claims = getClaimByToken(token);
+                if (claims != null) {
+                    String username = claims.getSubject();
+                    if (username != null) {
+                        User user = userService.getUserByUsername(username);
+                        if (user != null) {
+                            return user.getId();
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
